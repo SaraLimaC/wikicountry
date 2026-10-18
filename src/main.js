@@ -9,9 +9,7 @@ import {
   mostrarLista,
   mostrarPais
 } from './render.js';
-
-// ---------- Referencias al DOM ----------
-
+ //constantes que seleccionan del documento los ids
 const input = document.querySelector("#pais");
 const boton = document.querySelector("#buscar");
 const mensaje = document.querySelector("#mensaje");
@@ -22,11 +20,11 @@ const detalle = document.querySelector("#detalle");
 const botonVolver = document.querySelector("#volver");
 const selectorRegion = document.querySelector("#region");
 
-// ---------- Datos ----------
+//array para guardar los paises
 
 let todosPaises = [];
 
-// ---------- Cambio de vista ----------
+//esconde el resto de paises y solo te muestra el que buscaste o pinchaste
 
 function verPais() {
   busqueda.hidden = true;
@@ -40,7 +38,7 @@ function verLista() {
   resultado.innerHTML = "";
 }
 
-// ---------- Inicio ----------
+//Funcion que carga los paises y la página
 
 async function iniciar() {
   try {
@@ -68,7 +66,7 @@ async function iniciar() {
   }
 }
 
-// ---------- Buscar país ----------
+// Busca
 
 async function abrirPais(nombre) {
 
@@ -119,9 +117,7 @@ async function abrirPais(nombre) {
   }
 }
 
-// ---------- Eventos ----------
-
-// Click sobre un país
+//si se hace click sobre un país se llama a la función que lo abre
 
 listaPaises.addEventListener(
   "click",
@@ -141,7 +137,7 @@ listaPaises.addEventListener(
   }
 );
 
-// Enter
+//si introduces por el teclado un texto lo lee y da resultados que lo contengan
 
 input.addEventListener(
   "keydown",
@@ -158,7 +154,7 @@ input.addEventListener(
   }
 );
 
-// Botón buscar
+//Botón buscar
 
 boton.addEventListener(
   "click",
@@ -178,7 +174,7 @@ botonVolver.addEventListener(
   verLista
 );
 
-// Filtro por texto
+//Filtro por texto
 
 input.addEventListener(
   "input",
@@ -248,6 +244,6 @@ selectorRegion?.addEventListener(
   }
 );
 
-// ---------- Arranque ----------
+//iniciamos
 
 iniciar();
