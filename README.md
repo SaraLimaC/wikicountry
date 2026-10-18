@@ -1,6 +1,6 @@
 ## Cómo probarlo
 
-    Abre en el navegador la dirección local proporcionada por Vite. Verás que se trata de un buscador de países que ofrece información acerca de ellos, hay una barra de búsqueda, una lista, ordenada alfabéticamente, y un mapa en la parte inferior. 
+    Abre en el navegador la dirección local proporcionada por Vite. Verás que se trata de un buscador de países que ofrece información acerca de ellos, hay una barra de búsqueda, una lista, ordenada alfabéticamente.
 
 ## Uso de IA
 
