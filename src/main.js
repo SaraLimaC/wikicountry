@@ -48,21 +48,15 @@ async function iniciar() {
 
     todosPaises = await cargarPaises();
 
-    todosPaises.sort((a, b) =>
-      a.name.localeCompare(b.name)
-    );
+    todosPaises.sort((a, b) => a.name.localeCompare(b.name) );
 
-    mostrarLista(
-      todosPaises,
-      listaPaises
-    );
+    mostrarLista( todosPaises, listaPaises );
 
     mensaje.textContent = "";
 
   } catch (error) {
 
-    mensaje.textContent =
-      error.message;
+    mensaje.textContent = error.message;
 
     console.error(error);
   }
@@ -75,25 +69,17 @@ async function abrirPais(nombre) {
   nombre = nombre.trim();
 
   if (nombre === "") {
-    mensaje.textContent =
-      "Escribe el nombre de un país.";
+    mensaje.textContent = "Escribe el nombre de un país.";
     return;
   }
 
   try {
 
-    mensaje.textContent =
-      "Cargando...";
+    mensaje.textContent = "Cargando...";
 
-    const data =
-      await buscarPais(nombre);
+    const data = await buscarPais(nombre);
 
-    const pais =
-      data.find(
-        p =>
-          p.name.toLowerCase() ===
-          nombre.toLowerCase()
-      ) || data[0];
+    const pais = data.find( p => p.name.toLowerCase() === nombre.toLowerCase() ) || data[0];
 
     if (!pais) {
       throw new Error(
@@ -101,10 +87,7 @@ async function abrirPais(nombre) {
       );
     }
 
-    mostrarPais(
-      pais,
-      resultado
-    );
+    mostrarPais( pais, resultado);
 
     mensaje.textContent = "";
 
@@ -112,8 +95,7 @@ async function abrirPais(nombre) {
 
   } catch (error) {
 
-    mensaje.textContent =
-      error.message;
+    mensaje.textContent = error.message;
 
     console.error(error);
   }
@@ -121,113 +103,84 @@ async function abrirPais(nombre) {
 
 //si se hace click sobre un país se llama a la función que lo abre
 
-listaPaises.addEventListener(
-  "click",
-  (e) => {
+listaPaises.addEventListener("click", (e) => {
+  const item = e.target.closest(".pais-item");
 
-    const item =
-      e.target.closest(".pais-item");
+  if (item) {
 
-    if (item) {
-
-      abrirPais(
-        item.dataset.nombre
-      );
-
-    }
-
+    abrirPais(item.dataset.nombre);
   }
-);
+
+});
 
 //si introduces por el teclado un texto lo lee y da resultados que lo contengan
 
-input.addEventListener(
-  "keydown",
-  (event) => {
+input.addEventListener( "keydown", (event) => {
 
-    if (event.key === "Enter") {
+  if (event.key === "Enter") {
 
-      abrirPais(
-        input.value
-      );
-
-    }
-
+    abrirPais(input.value);
   }
-);
+
+});
 
 //Botón buscar
 
-boton.addEventListener(
-  "click",
-  () => {
+boton.addEventListener( "click",() => {
+  abrirPais(
+    input.value
+  );
 
-    abrirPais(
-      input.value
-    );
-
-  }
-);
+});
 
 // Volver
 
-botonVolver.addEventListener(
-  "click",
-  verLista
-);
+botonVolver.addEventListener("click",verLista);
 
 //Filtro por texto
 
-input.addEventListener(
-  "input",
-  () => {
+input.addEventListener( "input", () => {
+  const texto = input.value.trim().toLowerCase();
 
-    const texto =
-      input.value
-        .trim()
-        .toLowerCase();
+  if (texto === "") {
 
-    if (texto === "") {
+    mostrarLista( todosPaises, listaPaises );
+
+    return;
+  }
+
+  const filtrados = todosPaises.filter( pais => pais.name.toLowerCase() .startsWith(texto) );
+
+  const poblacionTotal = filtrados.reduce(
+    (acumulador, pais) => acumulador + pais.population, 0
+  );
+
+  estadisticas.textContent = `Población total de los resultados: ${poblacionTotal.toLocaleString("es-ES")}`;
+
+  mostrarLista( filtrados, listaPaises);
+
+});
+
+// Filtro por región
+
+selectorRegion?.addEventListener( "change", () => {
+
+  const region = selectorRegion.value;
+
+    if (region === "") {
 
       mostrarLista( todosPaises, listaPaises );
 
       return;
     }
 
-    const filtrados = todosPaises.filter( pais => pais.name.toLowerCase() .startsWith(texto) );
+  const filtrados = todosPaises.filter( pais => pais.region === region );
+  const poblacionTotal = filtrados.reduce( (acc, pais) => acc + pais.population, 0 );
 
-    const poblacionTotal = filtrados.reduce(
-      (acumulador, pais) => acumulador + pais.population, 0
-    );
+  estadisticas.textContent =`Población total: ${poblacionTotal.toLocaleString("es-ES")}`; 
+  mostrarLista( filtrados,listaPaises );
 
-    estadisticas.textContent = `Población total de los resultados: ${poblacionTotal.toLocaleString("es-ES")}`;
-
-    mostrarLista( filtrados, listaPaises);
-
-  }
-);
-
-// Filtro por región
-
-  selectorRegion?.addEventListener( "change", () => {
-
-      const region = selectorRegion.value;
-
-      if (region === "") {
-
-        mostrarLista( todosPaises, listaPaises );
-
-        return;
-      }
-
-      const filtrados = todosPaises.filter( pais => pais.region === region );
-      const poblacionTotal = filtrados.reduce( (acc, pais) => acc + pais.population, 0 );
-
-      estadisticas.textContent =`Población total: ${poblacionTotal.toLocaleString("es-ES")}`; 
-      mostrarLista( filtrados,listaPaises );
-
-  }
-);
+});
 
 //iniciamos
 
