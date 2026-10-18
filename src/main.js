@@ -52,6 +52,11 @@ async function iniciar() {
 
     mostrarLista( todosPaises, listaPaises );
 
+    const poblacionTotal = todosPaises.reduce((acumulador, pais) => acumulador + pais.population,0);
+
+    estadisticas.textContent = "Población total de los resultados: " + poblacionTotal.toLocaleString("es-ES");
+
+
     mensaje.textContent = "";
 
   } catch (error) {
