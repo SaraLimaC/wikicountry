@@ -9,6 +9,7 @@ import {
   mostrarLista,
   mostrarPais
 } from './render.js';
+
  //constantes que seleccionan del documento los ids
 const input = document.querySelector("#pais");
 const boton = document.querySelector("#buscar");
@@ -19,6 +20,7 @@ const busqueda = document.querySelector("#busqueda");
 const detalle = document.querySelector("#detalle");
 const botonVolver = document.querySelector("#volver");
 const selectorRegion = document.querySelector("#region");
+const estadisticas = document.querySelector("#estadisticas");
 
 //array para guardar los paises
 
@@ -187,59 +189,42 @@ input.addEventListener(
 
     if (texto === "") {
 
-      mostrarLista(
-        todosPaises,
-        listaPaises
-      );
+      mostrarLista( todosPaises, listaPaises );
 
       return;
     }
 
-    const filtrados =
-      todosPaises.filter(
-        pais =>
-          pais.name
-            .toLowerCase()
-            .startsWith(texto)
-      );
+    const filtrados = todosPaises.filter( pais => pais.name.toLowerCase() .startsWith(texto) );
 
-    mostrarLista(
-      filtrados,
-      listaPaises
+    const poblacionTotal = filtrados.reduce(
+      (acumulador, pais) => acumulador + pais.population, 0
     );
+
+    estadisticas.textContent = `Población total de los resultados: ${poblacionTotal.toLocaleString("es-ES")}`;
+
+    mostrarLista( filtrados, listaPaises);
 
   }
 );
 
 // Filtro por región
 
-selectorRegion?.addEventListener(
-  "change",
-  () => {
+  selectorRegion?.addEventListener( "change", () => {
 
-    const region =
-      selectorRegion.value;
+      const region = selectorRegion.value;
 
-    if (region === "") {
+      if (region === "") {
 
-      mostrarLista(
-        todosPaises,
-        listaPaises
-      );
+        mostrarLista( todosPaises, listaPaises );
 
-      return;
-    }
+        return;
+      }
 
-    const filtrados =
-      todosPaises.filter(
-        pais =>
-          pais.region === region
-      );
+      const filtrados = todosPaises.filter( pais => pais.region === region );
+      const poblacionTotal = filtrados.reduce( (acc, pais) => acc + pais.population, 0 );
 
-    mostrarLista(
-      filtrados,
-      listaPaises
-    );
+      estadisticas.textContent =`Población total: ${poblacionTotal.toLocaleString("es-ES")}`; 
+      mostrarLista( filtrados,listaPaises );
 
   }
 );
