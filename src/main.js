@@ -45,8 +45,21 @@ function verLista() {
 async function iniciar() {
   try {
     mensaje.textContent = "Cargando países...";
+    // Cacheamos los países en localStorage
+    // para evitar repetir peticiones a la API
+    const cache = localStorage.getItem("paises");
 
-    todosPaises = await cargarPaises();
+    if (cache) {
+      todosPaises = JSON.parse(cache);
+    } else {
+
+      todosPaises = await cargarPaises();
+
+      localStorage.setItem(
+        "paises",
+        JSON.stringify(todosPaises)
+      );
+    }
 
     todosPaises.sort((a, b) => a.name.localeCompare(b.name) );
 

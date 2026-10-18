@@ -1,6 +1,6 @@
 ## Cómo probarlo
 
-    Abre m2.html en el navegador (o con Live Server). Verás que se trata de un buscador de países que ofrece información acerca de ellos, hay una barra de búsqueda, una lista, ordenada alfabéticamente, y un mapa en la parte inferior.
+    Abre en el navegador la dirección local proporcionada por Vite. Verás que se trata de un buscador de países que ofrece información acerca de ellos, hay una barra de búsqueda, una lista, ordenada alfabéticamente, y un mapa en la parte inferior. 
 
 ## Uso de IA
 
@@ -14,9 +14,13 @@
 
     Ejemplo de prompt: "Algunos países no tienen los campos que usé entonces no llegan a cargar, ¿qué solución hay?, ¿puedo cambiar los campos en esos países?".
 
-    También usé Copilot para implementar la vista de los países o el navegador, para alternar entre la lista de países y la ficha con detalles de cada país mediante botones y los cambios de visibilidad como hidden.
+    Usé Copilot para implementar la vista de los países o el navegador, para alternar entre la lista de países y la ficha con detalles de cada país mediante botones y los cambios de visibilidad como hidden.
 
     Ejemplo de prompt: "Se puede ocultar la lista y mostrar únicamente la información del país seleccionado, y también quiero que se pueda volver atrás sin recargar la página".
+
+    También usé Copilot para implementar el bonus de localStorage, evitando repetir peticiones innecesarias a la API cada vez que se cargaba la aplicación.
+
+    Ejemplo de prompt: "Como se puede guardar los datos obtenidos de una API en localStorage para no volver a pedirlos".
 
 ## Autopsia
 1. Para algunos países no había información de los campos que yo pedía y mostraba, así que le añadí algunos mensajes de error cuando el campo está  vacío, pero luego lo cambié para que fuera más limpio y no impidiera mostrar el resto de campos y les di un valor por defecto, si estaban vacíos entonces se llenaba con "" y así evitaba que lanzara tantos errores.
