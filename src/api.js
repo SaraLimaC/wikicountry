@@ -16,7 +16,7 @@ export async function cargarPaises() {
 export async function buscarPais(nombre) {
 
     const response = await fetch(
-        `https://countries.dev/name/${nombre}`
+        `https://countries.dev/name/${encodeURIComponent(nombre)}`
     );
 
     if (!response.ok) {
