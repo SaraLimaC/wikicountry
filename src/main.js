@@ -10,6 +10,13 @@ import {
   mostrarPais
 } from './render.js';
 
+import {
+  ordenarPaises,
+  filtrarPorTexto,
+  filtrarPorRegion,
+  calcularPoblacionTotal
+} from "./logica.js";
+
  //constantes que seleccionan del documento los ids
 const input = document.querySelector("#pais");
 const boton = document.querySelector("#buscar");
@@ -61,13 +68,12 @@ async function iniciar() {
       );
     }
 
-    todosPaises.sort((a, b) => a.name.localeCompare(b.name) );
-
+    todosPaises = ordenarPaises(todosPaises);
     mostrarLista( todosPaises, listaPaises );
 
-    const poblacionTotal = todosPaises.reduce((acumulador, pais) => acumulador + pais.population,0);
+    const poblacionTotal = calcularPoblacionTotal(todosPaises);
 
-    estadisticas.textContent = "Población total de los resultados: " + poblacionTotal.toLocaleString("es-ES");
+    estadisticas.textContent ="Población total mundial: " + poblacionTotal.toLocaleString("es-ES");
 
 
     mensaje.textContent = "";
@@ -164,14 +170,16 @@ input.addEventListener( "input", () => {
 
     mostrarLista( todosPaises, listaPaises );
 
+    const poblacionTotal = calcularPoblacionTotal( todosPaises);
+
+    estadisticas.textContent = "Población total mundial: " + poblacionTotal.toLocaleString("es-ES");
     return;
   }
 
-  const filtrados = todosPaises.filter( pais => pais.name.toLowerCase() .startsWith(texto) );
+  const filtrados = filtrarPorTexto( todosPaises, texto);
 
-  const poblacionTotal = filtrados.reduce(
-    (acumulador, pais) => acumulador + pais.population, 0
-  );
+
+  const poblacionTotal = calcularPoblacionTotal(filtrados);
 
   estadisticas.textContent = `Población total de los resultados: ${poblacionTotal.toLocaleString("es-ES")}`;
 
@@ -189,11 +197,14 @@ selectorRegion?.addEventListener( "change", () => {
 
       mostrarLista( todosPaises, listaPaises );
 
+      const poblacionTotal = calcularPoblacionTotal( todosPaises );
+
+      estadisticas.textContent = "Población total mundial: " + poblacionTotal.toLocaleString("es-ES");
       return;
     }
 
-  const filtrados = todosPaises.filter( pais => pais.region === region );
-  const poblacionTotal = filtrados.reduce( (acc, pais) => acc + pais.population, 0 );
+  const filtrados = filtrarPorRegion(todosPaises, region);
+  const poblacionTotal = calcularPoblacionTotal(filtrados);
 
   estadisticas.textContent =`Población total: ${poblacionTotal.toLocaleString("es-ES")}`; 
   mostrarLista( filtrados,listaPaises );
