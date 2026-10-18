@@ -73,7 +73,7 @@ async function iniciar() {
 
     const poblacionTotal = calcularPoblacionTotal(todosPaises);
 
-    estadisticas.textContent ="Población total mundial: " + poblacionTotal.toLocaleString("es-ES");
+    estadisticas.textContent =`Resultados: ${todosPaises.length} |Población total mundial: ${poblacionTotal.toLocaleString("es-ES")}`;
 
 
     mensaje.textContent = "";
@@ -172,7 +172,7 @@ input.addEventListener( "input", () => {
 
     const poblacionTotal = calcularPoblacionTotal( todosPaises);
 
-    estadisticas.textContent = "Población total mundial: " + poblacionTotal.toLocaleString("es-ES");
+    estadisticas.textContent = `Resultados: ${todosPaises.length} | Población total mundial: ${poblacionTotal.toLocaleString("es-ES")}`;
     return;
   }
 
@@ -181,7 +181,7 @@ input.addEventListener( "input", () => {
 
   const poblacionTotal = calcularPoblacionTotal(filtrados);
 
-  estadisticas.textContent = `Población total de los resultados: ${poblacionTotal.toLocaleString("es-ES")}`;
+  estadisticas.textContent = `Resultados: ${filtrados.length} | Población total de los resultados: ${poblacionTotal.toLocaleString("es-ES")}`;
 
   mostrarLista( filtrados, listaPaises);
 
@@ -199,14 +199,15 @@ selectorRegion?.addEventListener( "change", () => {
 
       const poblacionTotal = calcularPoblacionTotal( todosPaises );
 
-      estadisticas.textContent = "Población total mundial: " + poblacionTotal.toLocaleString("es-ES");
+      estadisticas.textContent = `Resultados: ${todosPaises.length} |Población total mundial: ${poblacionTotal.toLocaleString("es-ES")}`;
+      
       return;
     }
 
   const filtrados = filtrarPorRegion(todosPaises, region);
   const poblacionTotal = calcularPoblacionTotal(filtrados);
 
-  estadisticas.textContent =`Población total: ${poblacionTotal.toLocaleString("es-ES")}`; 
+  estadisticas.textContent =`Resultados: ${filtrados.length} |Población total: ${poblacionTotal.toLocaleString("es-ES")}`; 
   mostrarLista( filtrados,listaPaises );
 
 });
